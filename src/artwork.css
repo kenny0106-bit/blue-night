@@ -1,0 +1,666 @@
+/* Focused illustration refinements for the Hammond console and analog synth. */
+.organ-art,
+.guitar-art,
+.synth-art,
+.mic-art {
+  translate: 0 0;
+  scale: 1;
+  animation: instrument-float 5.4s ease-in-out infinite;
+}
+.style-funk .guitar-art { animation-delay: -1.2s; }
+.style-fusion .synth-art { animation-delay: -2.3s; }
+.style-rnb .mic-art { animation-delay: -3.1s; }
+.is-playing .organ-art,
+.is-playing .guitar-art,
+.is-playing .synth-art,
+.is-playing .mic-art { animation-name: instrument-float, instrument-breathe; animation-duration: 5.4s, 4.8s; animation-timing-function: ease-in-out, ease-in-out; animation-iteration-count: infinite; }
+@keyframes instrument-float { 0%,100% { translate: 0 -2px; } 50% { translate: 0 2px; } }
+@keyframes instrument-breathe { 0%,100% { scale: 1; } 50% { scale: 1.008; } }
+.is-settling .organ-art,.is-settling .guitar-art,.is-settling .synth-art,.is-settling .mic-art { animation-name:instrument-float,instrument-settle; animation-duration:5.4s,1.8s; animation-timing-function:ease-in-out,cubic-bezier(.22,.72,.2,1); animation-delay:0s,0s; animation-iteration-count:infinite,1; animation-fill-mode:none,forwards; }
+@keyframes instrument-settle { from { scale:var(--settle-scale,1); } to { scale:1; } }
+
+
+.organ-art {
+  top: 9%;
+  width: min(70%, 540px);
+  height: 82%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: clamp(7px, 1vw, 13px) clamp(9px, 1.2vw, 16px) 8px;
+  transform: translateX(-50%) skewY(-3deg);
+  background: linear-gradient(155deg, #454239, #201f1b 56%, #090a0b);
+  border-width: 2px 3px 4px;
+  box-shadow: 13px 18px 0 #0008, 0 0 24px #d8572030;
+}
+.organ-top {
+  height: 9%;
+  min-height: 12px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #8f8876;
+  color: #e5bd3c;
+  font: 700 clamp(6px, .75vw, 9px) 'DM Mono', monospace;
+  letter-spacing: .1em;
+}
+.organ-drawbars {
+  height: 20%;
+  min-height: 22px;
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  align-items: center;
+  gap: 5px;
+  padding: 4px 7px;
+  border-bottom: 1px solid #aaa38e;
+  background: #111213;
+}
+.organ-drawbars i {
+  position: relative;
+  height: 3px;
+  background: linear-gradient(90deg, #b9b19a 0 72%, transparent 72%);
+  border-right: 2px solid var(--accent);
+}
+.organ-drawbars i:nth-child(3n + 1) { background-size: 55% 100%; }
+.organ-drawbars i:nth-child(3n + 2) { background-size: 82% 100%; }
+.organ-manuals {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 3px 0;
+  background: #0d0e0f;
+}
+.organ-manuals .organ-keys {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #cec8b5;
+  background: #dedac9;
+}
+.organ-manuals .organ-keys i {
+  position: relative;
+  flex: 1;
+  border-right: 1px solid #292824;
+  background: linear-gradient(90deg, #c8c4b5, #f0eddd 23%, #f0eddd 78%, #c4c0b0);
+}
+.organ-manuals .organ-keys i:nth-child(7n + 2)::after,
+.organ-manuals .organ-keys i:nth-child(7n + 4)::after,
+.organ-manuals .organ-keys i:nth-child(7n + 7)::after,
+.organ-manuals .organ-keys i:nth-child(7n + 9)::after,
+.organ-manuals .organ-keys i:nth-child(7n + 11)::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: -31%;
+  width: 62%;
+  height: 57%;
+  background: linear-gradient(90deg, #111, #282720 75%, #090909);
+  border: 1px solid #6d6859;
+  border-top: 0;
+}
+.organ-pedals {
+  flex: none;
+  height: 9%;
+  min-height: 9px;
+  display: flex;
+  gap: 2px;
+  padding: 2px 10px 0;
+  border-top: 1px solid #777264;
+  background: #111213;
+}
+.organ-pedals i {
+  flex: 1;
+  border: 1px solid #aaa28c;
+  border-top: 0;
+  background: linear-gradient(90deg, #4a483f, #b3aa90 45%, #35342e);
+}
+
+.synth-art {
+  width: min(76%, 650px);
+  height: 78%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 13px;
+  transform: translate(-50%, -50%) perspective(800px) rotateX(8deg) rotateZ(-3deg);
+  background: linear-gradient(145deg, #393b3d, #17191a 60%, #101112);
+  border: 1px solid #a49e8e;
+  box-shadow: 15px 18px #0009, inset 0 0 0 2px #0b0c0d;
+}
+.synth-label {
+  flex: none;
+  height: 12%;
+  min-height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  border-bottom: 1px solid #8d8879;
+  color: #e2d8bd;
+  font: 700 clamp(7px, .8vw, 10px) 'DM Mono', monospace;
+  letter-spacing: .12em;
+}
+.synth-label small {
+  color: var(--accent);
+  font: 7px 'DM Mono', monospace;
+  letter-spacing: .08em;
+}
+.synth-panel {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  padding: 7px;
+  border: 1px solid #686761;
+  background: linear-gradient(135deg, #232526, #121415);
+}
+.synth-panel > span {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid #595950;
+  background: #1b1d1e;
+}
+.synth-panel > span > b {
+  color: var(--accent);
+  font: 7px 'DM Mono', monospace;
+  letter-spacing: .11em;
+}
+.synth-knobs {
+  display: flex;
+  justify-content: space-around;
+  gap: 3px;
+}
+.synth-knobs i {
+  position: relative;
+  width: clamp(13px, 2vw, 23px);
+  aspect-ratio: 1;
+  border: 2px solid #b9b4a4;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #595a57, #181a1b 68%);
+  box-shadow: 0 1px 2px #000;
+}
+.synth-knobs i::after {
+  content: '';
+  position: absolute;
+  left: 48%;
+  top: 0;
+  width: 1px;
+  height: 38%;
+  background: var(--accent);
+  transform: rotate(var(--turn));
+  transform-origin: bottom center;
+}
+.synth-faders {
+  height: 24%;
+  min-height: 16px;
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+  border-top: 1px solid #55564f;
+}
+.synth-faders > i {
+  position: relative;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(90deg, #77756a, #252627);
+}
+.synth-faders > i > b {
+  position: absolute;
+  top: var(--level);
+  left: -3px;
+  width: 10px;
+  height: 4px;
+  background: #d6d0bd;
+  border: 1px solid #171819;
+}
+.synth-keys {
+  flex: none;
+  height: 25%;
+  min-height: 28px;
+  display: flex;
+  margin: 0;
+  border: 1px solid #d1cbb8;
+  background: #dedacb;
+}
+.synth-keys i {
+  position: relative;
+  flex: 1;
+  border-right: 1px solid #222;
+  background: linear-gradient(90deg, #c9c5b7, #f2eedc 25%, #f2eedc 75%, #c9c5b7);
+}
+.synth-keys i:nth-child(12n + 2)::after,
+.synth-keys i:nth-child(12n + 4)::after,
+.synth-keys i:nth-child(12n + 7)::after,
+.synth-keys i:nth-child(12n + 9)::after,
+.synth-keys i:nth-child(12n + 11)::after,
+.synth-keys i:nth-child(12n + 14)::after,
+.synth-keys i:nth-child(12n + 16)::after,
+.synth-keys i:nth-child(12n + 19)::after,
+.synth-keys i:nth-child(12n + 21)::after,
+.synth-keys i:nth-child(12n + 23)::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: -31%;
+  width: 62%;
+  height: 57%;
+  background: #101112;
+  border: 1px solid #77736a;
+  border-top: 0;
+}
+
+/* Funk: a fully dressed double-cut electric guitar, drawn as a front-facing
+   instrument study with the same inked edge, hardware and accent finish. */
+.guitar-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(84%, 640px);
+  height: 78%;
+  transform: translate(-50%, -50%) perspective(800px) rotateX(5deg) rotateZ(-3deg);
+}
+.guitar-neck {
+  position: absolute;
+  z-index: 1;
+  left: 39%;
+  top: 41%;
+  width: 52%;
+  height: 16%;
+  border: 2px solid #b7ad91;
+  background: linear-gradient(180deg, #89816c, #322f28 17%, #18191a 84%, #716b5a);
+  box-shadow: 0 3px 0 #0009;
+}
+.guitar-frets {
+  position: absolute;
+  inset: 8% 3%;
+  background: repeating-linear-gradient(90deg, transparent 0 7.3%, #c6bda3 7.5%, transparent 7.8%);
+}
+.guitar-strings {
+  position: absolute;
+  z-index: 5;
+  left: 24%;
+  top: 47%;
+  width: 70%;
+  height: 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.guitar-strings i {
+  height: 1px;
+  background: linear-gradient(90deg, #e4decb, #f5f0dc 65%, #aaa38f);
+  box-shadow: 0 1px #111;
+}
+.guitar-headstock {
+  position: absolute;
+  z-index: 4;
+  left: 83%;
+  top: 30%;
+  width: 17%;
+  height: 39%;
+  clip-path: polygon(0 25%, 76% 0, 100% 48%, 82% 100%, 0 72%);
+  background: linear-gradient(135deg, #ddd4bb, #837c69 54%, #d6ceb8);
+  filter: drop-shadow(0 2px 1px #0009);
+}
+.guitar-headstock span {
+  position: absolute;
+  left: 25%;
+  top: 34%;
+  color: #1a1b1b;
+  font: 6px 'DM Mono', monospace;
+  transform: rotate(-15deg);
+}
+.guitar-headstock i {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #1a1b1b;
+  border-radius: 50%;
+  background: #d7d0bd;
+}
+.guitar-headstock i:nth-of-type(1) { left: 23%; top: 12%; }
+.guitar-headstock i:nth-of-type(2) { left: 49%; top: 8%; }
+.guitar-headstock i:nth-of-type(3) { left: 72%; top: 7%; }
+.guitar-headstock i:nth-of-type(4) { left: 22%; top: 73%; }
+.guitar-headstock i:nth-of-type(5) { left: 46%; top: 79%; }
+.guitar-headstock i:nth-of-type(6) { left: 68%; top: 81%; }
+.guitar-body {
+  position: absolute;
+  z-index: 2;
+  left: 3%;
+  top: 13%;
+  width: 52%;
+  height: 77%;
+  clip-path: polygon(55% 3%, 65% 11%, 84% 4%, 98% 15%, 91% 34%, 100% 48%, 90% 69%, 78% 88%, 58% 99%, 40% 94%, 27% 82%, 19% 70%, 20% 58%, 2% 52%, 8% 31%, 24% 34%, 34% 17%, 44% 12%);
+  border: 2px solid #e7dcae;
+  background: #e7dcae;
+  filter: drop-shadow(0 7px 4px #0009);
+}
+.guitar-body::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  clip-path: polygon(55% 3%, 65% 11%, 84% 4%, 98% 15%, 91% 34%, 100% 48%, 90% 69%, 78% 88%, 58% 99%, 40% 94%, 27% 82%, 19% 70%, 20% 58%, 2% 52%, 8% 31%, 24% 34%, 34% 17%, 44% 12%);
+  background: linear-gradient(135deg, #f1c84b, var(--accent) 50%, #aa7b27);
+}
+.guitar-pickguard {
+  position: absolute;
+  z-index: 1;
+  left: 27%;
+  top: 16%;
+  width: 49%;
+  height: 67%;
+  clip-path: polygon(0 0, 73% 4%, 100% 30%, 83% 82%, 37% 100%, 9% 81%);
+  border: 1px solid #d5c797;
+  background: linear-gradient(135deg, #272a2b, #0e1011 72%);
+}
+.guitar-pickups {
+  position: absolute;
+  z-index: 3;
+  left: 58%;
+  top: 27%;
+  width: 10%;
+  height: 48%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.guitar-pickups > i {
+  height: 23%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 3px;
+  border: 2px solid #aaa38f;
+  background: linear-gradient(90deg, #55534b, #242627 35%, #55534b);
+  box-shadow: 0 2px 0 #070808;
+}
+.guitar-pickups > i > b {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #e2d9c0;
+}
+.guitar-bridge {
+  position: absolute;
+  z-index: 3;
+  left: 20%;
+  top: 75%;
+  width: 36%;
+  height: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 2px solid #bcb39a;
+  background: linear-gradient(180deg, #5f5d55, #181a1b 58%, #4e4d47);
+}
+.guitar-bridge i {
+  width: 12%;
+  height: 60%;
+  border: 1px solid #d4cbb2;
+  background: #878172;
+}
+.guitar-knobs {
+  position: absolute;
+  z-index: 4;
+  left: 71%;
+  top: 49%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.guitar-knobs i {
+  width: 10px;
+  aspect-ratio: 1;
+  border: 2px solid #e0d7bd;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #6c695e, #171819 67%);
+  box-shadow: 0 1px 2px #000;
+}
+.guitar-switch {
+  position: absolute;
+  z-index: 4;
+  left: 78%;
+  top: 31%;
+  width: 3px;
+  height: 17px;
+  border-radius: 4px;
+  background: #e6ddc3;
+  transform: rotate(24deg);
+}
+.guitar-screws i {
+  position: absolute;
+  z-index: 4;
+  width: 4px;
+  height: 4px;
+  border: 1px solid #ded5bd;
+  border-radius: 50%;
+  background: #27292a;
+}
+.guitar-screws i:nth-child(1) { left: 26%; top: 22%; }
+.guitar-screws i:nth-child(2) { left: 75%; top: 23%; }
+.guitar-screws i:nth-child(3) { left: 83%; top: 65%; }
+.guitar-screws i:nth-child(4) { left: 25%; top: 82%; }
+.guitar-screws i:nth-child(5) { left: 49%; top: 88%; }
+
+/* R&B: a metal studio condenser on a compact stand and shock mount. */
+.mic-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(74%, 400px);
+  height: 94%;
+  transform: translate(-50%, -50%) perspective(700px) rotateY(-5deg) rotateZ(-2deg);
+}
+.guitar-art svg,
+.mic-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.mic-yoke {
+  position: absolute;
+  z-index: 1;
+  left: 12%;
+  top: 29%;
+  width: 76%;
+  height: 43%;
+  border: 3px solid #9f9a89;
+  border-top: 0;
+  border-radius: 0 0 38% 38%;
+  filter: drop-shadow(0 3px 1px #0008);
+}
+.mic-yoke i {
+  position: absolute;
+  top: -5px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #d6d0bd;
+  border-radius: 50%;
+  background: #333536;
+}
+.mic-yoke i:first-child { left: -7px; }
+.mic-yoke i:last-child { right: -7px; }
+.mic-head {
+  position: absolute;
+  z-index: 3;
+  left: 23%;
+  top: 1%;
+  width: 54%;
+  height: 44%;
+  border: 3px solid #d6d0bd;
+  border-radius: 49% 49% 27% 27%;
+  background: linear-gradient(110deg, #555653, #191b1c 37%, #333536 74%, #777363);
+  box-shadow: inset 0 0 0 3px #161819, 0 5px 8px #0009;
+}
+.mic-grille {
+  position: absolute;
+  inset: 8% 9% 19%;
+  overflow: hidden;
+  border: 1px solid #b9b4a4;
+  border-radius: 48% 48% 29% 29%;
+  background: repeating-linear-gradient(0deg, #77776e 0 1px, #202223 1px 4px), repeating-linear-gradient(90deg, transparent 0 3px, #999587 4px, #27292a 5px);
+  box-shadow: inset 0 0 12px #000b;
+}
+.mic-grille-band {
+  position: absolute;
+  left: 4%;
+  bottom: 12%;
+  width: 92%;
+  height: 8%;
+  border-block: 1px solid #d6d0bd;
+  background: linear-gradient(90deg, #777263, #2e3031, #817a68);
+}
+.mic-body {
+  position: absolute;
+  z-index: 3;
+  left: 29%;
+  top: 43%;
+  width: 42%;
+  height: 30%;
+  clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+  border: 2px solid #d6d0bd;
+  background: linear-gradient(90deg, #9b9582, #292b2c 24%, #55564f 50%, #242627 76%, #aaa18a);
+  box-shadow: 0 5px 8px #0009;
+}
+.mic-body > span {
+  position: absolute;
+  left: 0;
+  top: 19%;
+  width: 100%;
+  color: #e3dcc8;
+  font: 6px 'DM Mono', monospace;
+  letter-spacing: .12em;
+  text-align: center;
+}
+.mic-body-slots {
+  position: absolute;
+  left: 23%;
+  top: 39%;
+  width: 54%;
+  display: flex;
+  justify-content: space-between;
+}
+.mic-body-slots i {
+  width: 2px;
+  height: 19px;
+  background: #161819;
+  box-shadow: 1px 0 #b7af98;
+}
+.mic-body-dial {
+  position: absolute;
+  left: 43%;
+  bottom: 10%;
+  width: 14px;
+  aspect-ratio: 1;
+  border: 2px solid #d6d0bd;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #64645c, #141617 70%);
+}
+.mic-mount {
+  position: absolute;
+  z-index: 2;
+  left: 36%;
+  top: 69%;
+  width: 28%;
+  height: 12%;
+  border: 2px solid #b4ad99;
+  border-top: 0;
+  background: linear-gradient(90deg, #55534b, #1e2021, #77705d);
+}
+.mic-mount i {
+  position: absolute;
+  left: 41%;
+  top: 64%;
+  width: 18%;
+  aspect-ratio: 1;
+  border: 2px solid #e0d8c2;
+  border-radius: 50%;
+  background: #282a2b;
+}
+.mic-mount b {
+  position: absolute;
+  left: 47%;
+  top: 100%;
+  width: 6%;
+  height: 80%;
+  background: #bdb59e;
+}
+.mic-stand {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 80%;
+  width: 2px;
+  height: 15%;
+  background: linear-gradient(90deg, #777263, #e0d8c2, #343637);
+}
+.mic-joint {
+  position: absolute;
+  left: -5px;
+  top: -4px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #d6d0bd;
+  border-radius: 50%;
+  background: #27292a;
+}
+.mic-base {
+  position: absolute;
+  left: -26px;
+  bottom: 0;
+  width: 54px;
+  height: 8px;
+  border: 2px solid #aaa38f;
+  border-radius: 50%;
+  background: #262829;
+}
+.mic-feet i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 34px;
+  height: 3px;
+  border: 1px solid #aaa38f;
+  background: #353738;
+  transform-origin: right center;
+}
+.mic-feet i:first-child { transform: rotate(21deg); }
+.mic-feet i:nth-child(2) { transform: rotate(-21deg); transform-origin: left center; left: 0; }
+.mic-feet i:last-child { transform: rotate(90deg); transform-origin: left center; left: -1px; }
+
+@media (max-width: 700px) {
+  .organ-art { width: 78%; height: 82%; top: 9%; }
+  .organ-drawbars { gap: 3px; padding-inline: 4px; }
+  .organ-manuals { gap: 3px; }
+  .organ-pedals { padding-inline: 6px; }
+  .synth-art { width: 88%; height: 77%; padding: 8px; gap: 5px; }
+  .synth-panel { gap: 4px; padding: 5px; }
+  .synth-panel > span { padding: 3px; gap: 3px; }
+  .synth-panel > span > b { font-size: 6px; }
+  .synth-label small { font-size: 6px; }
+  .guitar-art { width: 92%; height: 72%; transform: translate(-50%, -50%) perspective(800px) rotateX(4deg) rotateZ(-3deg); }
+  .guitar-headstock i { width: 6px; height: 6px; border-width: 1px; }
+  .guitar-knobs i { width: 7px; }
+  .guitar-pickups > i { border-width: 1px; }
+  .guitar-bridge { border-width: 1px; }
+  .guitar-screws i { width: 3px; height: 3px; }
+  .mic-art { width: min(74%, 290px); height: 94%; }
+}
