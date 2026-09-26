@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 400" role="img" aria-label="Classic studio condenser microphone with mesh grille, metal body, shock mount, and stand">
+  <defs>
+    <linearGradient id="mic-shell" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#b7b09b"/><stop offset=".2" stop-color="#393b3b"/><stop offset=".53" stop-color="#777668"/><stop offset=".78" stop-color="#292b2c"/><stop offset="1" stop-color="#b9b19a"/></linearGradient>
+    <linearGradient id="mic-grill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#555751"/><stop offset=".4" stop-color="#17191a"/><stop offset="1" stop-color="#777568"/></linearGradient>
+    <linearGradient id="mic-stand-metal" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#454744"/><stop offset=".45" stop-color="#d1c9b3"/><stop offset="1" stop-color="#3b3d3d"/></linearGradient>
+    <pattern id="mic-mesh" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 0L7 7M7 0L0 7" stroke="#a9a593" stroke-width=".8" opacity=".72"/><circle cx="3.5" cy="3.5" r=".8" fill="#ddd5bf" opacity=".8"/></pattern>
+  </defs>
+  <ellipse cx="180" cy="379" rx="102" ry="10" fill="#000" opacity=".26"/>
+  <path d="M112 157V194C112 233 141 255 180 255S248 233 248 194V157" fill="none" stroke="#aaa38f" stroke-width="8"/>
+  <path d="M118 157V190C118 224 145 245 180 245S242 224 242 190V157" fill="none" stroke="#343637" stroke-width="3"/>
+  <circle cx="112" cy="157" r="10" fill="url(#mic-shell)" stroke="#e4ddca" stroke-width="3"/><circle cx="248" cy="157" r="10" fill="url(#mic-shell)" stroke="#e4ddca" stroke-width="3"/>
+  <path d="M130 151V198Q180 239 230 198V151" fill="none" stroke="#cbc3ad" stroke-width="3"/>
+  <rect x="155" y="248" width="50" height="24" rx="4" fill="url(#mic-shell)" stroke="#e0d8c2" stroke-width="3"/><circle cx="180" cy="260" r="8" fill="#202223" stroke="#d5cdb6" stroke-width="3"/>
+  <path d="M176 269H184L190 306H170Z" fill="url(#mic-stand-metal)" stroke="#aaa38f" stroke-width="2"/>
+  <path d="M177 305L101 359Q96 365 106 367L180 327L254 367Q264 365 259 359L183 305Z" fill="url(#mic-stand-metal)" stroke="#b9b19b" stroke-width="2"/><path d="M180 326V369" stroke="#dfd7c0" stroke-width="3"/>
+  <path d="M90 369Q180 382 270 369L267 378Q180 391 93 378Z" fill="#242627" stroke="#b7af98" stroke-width="3"/>
+  <path d="M126 117V76C126 38 150 15 180 15S234 38 234 76V117Q234 130 221 137H139Q126 130 126 117Z" fill="url(#mic-grill)" stroke="#e6deca" stroke-width="4"/>
+  <path d="M134 77C134 45 153 25 180 25S226 45 226 77V111Q226 124 216 129H144Q134 124 134 111Z" fill="url(#mic-mesh)" stroke="#bbb4a1" stroke-width="2"/>
+  <path d="M128 108H232V119H128Z" fill="url(#mic-shell)" stroke="#e1d9c4" stroke-width="2"/>
+  <path d="M137 120L223 120L215 236Q180 247 145 236Z" fill="url(#mic-shell)" stroke="#e0d8c2" stroke-width="3"/>
+  <path d="M145 137H215" stroke="#17191a" stroke-width="2"/><path d="M150 145H210" stroke="#d4cbb5"/>
+  <text x="180" y="166" text-anchor="middle" fill="#eee6d1" font-family="monospace" font-size="10" letter-spacing="2">BLUE NIGHT</text>
+  <g stroke="#1b1d1e" stroke-width="3"><path d="M161 181V206M170 181V206M179 181V206M188 181V206M197 181V206"/></g>
+  <path d="M145 215H215" stroke="#d5cdb8" stroke-width="2"/><circle cx="180" cy="225" r="6" fill="#242627" stroke="#e2dac4" stroke-width="2"/><path d="M168 237H192" stroke="#181a1b" stroke-width="5"/>
+  <g fill="#17191a" stroke="#e0d8c2" stroke-width="2"><circle cx="135" cy="288" r="4"/><circle cx="225" cy="288" r="4"/><circle cx="105" cy="360" r="4"/><circle cx="255" cy="360" r="4"/></g>
+</svg>

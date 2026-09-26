@@ -7,6 +7,9 @@
   scale: 1;
   animation: instrument-float 5.4s ease-in-out infinite;
 }
+.instrument-svg { display:block; width:100%; height:100%; object-fit:fill; }
+.organ-art > .instrument-svg,
+.synth-art > .instrument-svg { flex:1; min-height:0; }
 .style-funk .guitar-art { animation-delay: -1.2s; }
 .style-fusion .synth-art { animation-delay: -2.3s; }
 .style-rnb .mic-art { animation-delay: -3.1s; }

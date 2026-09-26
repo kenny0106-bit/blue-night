@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" role="img" aria-label="Analog synthesizer with control panel, knobs, faders and keyboard">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#232526"/><stop offset="1" stop-color="#121415"/></linearGradient>
+    <linearGradient id="knob" x1=".35" y1="0" x2=".7" y2="1"><stop stop-color="#595a57"/><stop offset=".68" stop-color="#181a1b"/></linearGradient>
+    <linearGradient id="fader" x2="1"><stop stop-color="#77756a"/><stop offset="1" stop-color="#252627"/></linearGradient>
+    <linearGradient id="key" x2="1"><stop stop-color="#c8c4b5"/><stop offset=".23" stop-color="#f0eddd"/><stop offset=".78" stop-color="#f0eddd"/><stop offset="1" stop-color="#c4c0b0"/></linearGradient>
+  </defs>
+  <text x="5" y="18" fill="#e2d8bd" font-family="monospace" font-size="15" font-weight="700" letter-spacing="2">BLUE NIGHT — 2600</text>
+  <text x="795" y="18" text-anchor="end" fill="#7184bd" font-family="monospace" font-size="12" letter-spacing="1.5">ANALOG / POLYPHONIC</text>
+  <path d="M0 30H800" stroke="#8d8879"/>
+  <rect x="0" y="39" width="800" height="274" fill="url(#panel)" stroke="#686761" stroke-width="2"/>
+  <g font-family="monospace" font-size="12" fill="#7184bd" letter-spacing="1.5">
+    <text x="22" y="64">OSC</text><text x="219" y="64">FILTER</text><text x="416" y="64">ENVELOPE</text><text x="613" y="64">LFO</text>
+  </g>
+  <g fill="#1b1d1e" stroke="#595950" stroke-width="2">
+    <rect x="12" y="47" width="181" height="246"/><rect x="209" y="47" width="181" height="246"/><rect x="406" y="47" width="181" height="246"/><rect x="603" y="47" width="181" height="246"/>
+  </g>
+  <g fill="url(#knob)" stroke="#b9b4a4" stroke-width="4">
+    <circle cx="48" cy="142" r="12"/><circle cx="99" cy="142" r="12"/><circle cx="150" cy="142" r="12"/>
+    <circle cx="245" cy="142" r="12"/><circle cx="296" cy="142" r="12"/><circle cx="347" cy="142" r="12"/>
+    <circle cx="442" cy="142" r="12"/><circle cx="493" cy="142" r="12"/><circle cx="544" cy="142" r="12"/>
+    <circle cx="639" cy="142" r="12"/><circle cx="690" cy="142" r="12"/><circle cx="741" cy="142" r="12"/>
+  </g>
+  <g stroke="#7184bd" stroke-width="2">
+    <path d="M48 130v9M99 130v9M150 130v9M245 130v9M296 130v9M347 130v9M442 130v9M493 130v9M544 130v9M639 130v9M690 130v9M741 130v9"/>
+  </g>
+  <path d="M14 201H191M211 201H388M408 201H585M605 201H782" stroke="#55564f"/>
+  <g fill="url(#fader)" stroke="#817e73" stroke-width="1">
+    <rect x="37" y="218" width="6" height="57"/><rect x="88" y="218" width="6" height="57"/><rect x="139" y="218" width="6" height="57"/>
+    <rect x="234" y="218" width="6" height="57"/><rect x="285" y="218" width="6" height="57"/><rect x="336" y="218" width="6" height="57"/>
+    <rect x="431" y="218" width="6" height="57"/><rect x="482" y="218" width="6" height="57"/><rect x="533" y="218" width="6" height="57"/>
+    <rect x="628" y="218" width="6" height="57"/><rect x="679" y="218" width="6" height="57"/><rect x="730" y="218" width="6" height="57"/>
+  </g>
+  <g fill="#b9b09a" stroke="#222" stroke-width="1">
+    <path d="M32 233h16v7H32zM83 246h16v7H83zM134 225h16v7h-16zM229 244h16v7h-16zM280 229h16v7h-16zM331 252h16v7h-16zM426 235h16v7h-16zM477 249h16v7h-16zM528 221h16v7h-16zM623 251h16v7h-16zM674 233h16v7h-16zM725 246h16v7h-16z"/>
+  </g>
+  <g fill="url(#key)" stroke="#242522" stroke-width="2">
+    <rect x="0" y="323" width="33.3" height="70"/><rect x="33.3" y="323" width="33.3" height="70"/><rect x="66.6" y="323" width="33.3" height="70"/><rect x="99.9" y="323" width="33.3" height="70"/><rect x="133.2" y="323" width="33.3" height="70"/><rect x="166.5" y="323" width="33.3" height="70"/><rect x="199.8" y="323" width="33.3" height="70"/><rect x="233.1" y="323" width="33.3" height="70"/><rect x="266.4" y="323" width="33.3" height="70"/><rect x="299.7" y="323" width="33.3" height="70"/><rect x="333" y="323" width="33.3" height="70"/><rect x="366.3" y="323" width="33.3" height="70"/><rect x="399.6" y="323" width="33.3" height="70"/><rect x="432.9" y="323" width="33.3" height="70"/><rect x="466.2" y="323" width="33.3" height="70"/><rect x="499.5" y="323" width="33.3" height="70"/><rect x="532.8" y="323" width="33.3" height="70"/><rect x="566.1" y="323" width="33.3" height="70"/><rect x="599.4" y="323" width="33.3" height="70"/><rect x="632.7" y="323" width="33.3" height="70"/><rect x="666" y="323" width="33.3" height="70"/><rect x="699.3" y="323" width="33.3" height="70"/><rect x="732.6" y="323" width="33.3" height="70"/><rect x="765.9" y="323" width="34.1" height="70"/>
+  </g>
+  <g fill="#101112" stroke="#77736a" stroke-width="2">
+    <path d="M50 323h17v42H50zM117 323h17v42h-17zM217 323h17v42h-17zM284 323h17v42h-17zM350 323h17v42h-17zM450 323h17v42h-17zM517 323h17v42h-17zM583 323h17v42h-17zM683 323h17v42h-17zM750 323h17v42h-17z"/>
+  </g>
+</svg>
