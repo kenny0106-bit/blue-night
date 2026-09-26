@@ -14,7 +14,7 @@ const genres = {
   rnb: { id: 'rnb', number: '04', title: 'R&B', instrument: 'MICROPHONE', subtitle: 'RHYTHM / BLUES', description: '麥克風不只是收音工具，更是 R&B 情感表達的入口。從細膩的氣音、柔和的旋律，到充滿力量的歌聲，聲音本身成為樂曲中最直接的情緒載體。', tagline: 'VOICE / SOUL / EMOTION', color: '#d6d0bd', shape: 'mic', track: 'R&B — live signal', audioFile: 'rnb.mp3' },
 }
 
-function Logo({ small = false }) { return <a className={`brand-logo ${small ? 'brand-logo-small' : ''}`} href="https://blue-night-homepage.vercel.app/" aria-label="Blue Night Homepage"><img src="/blue-night-mark-white.png" alt="Blue Night symbol" /></a> }
+function Logo({ small = false }) { return <a className={`brand-logo ${small ? 'brand-logo-small' : ''}`} href="https://blue-night-homepage.vercel.app/#portal" aria-label="Blue Night Homepage"><img src="/blue-night-mark-white.png" alt="Blue Night symbol" /></a> }
 
 function Vinyl() {
   return <div className="vinyl" aria-label="Blue Night record"><div className="record-label"><span>BLUE<br/>NIGHT</span><small>10 · 17 · 26</small></div><i className="record-shine" /></div>
