@@ -35,16 +35,25 @@ function InstrumentArt({ genre }) {
 function Waveform({ playing }) { return <div className={`waveform ${playing ? 'wave-active' : ''}`} aria-hidden="true">{Array.from({length:48},(_,i)=><i key={i} style={{'--h': `${18 + ((i*17 + i*i*3)%78)}%`, '--d': `${(i%8)*.08}s`}} />)}</div> }
 
 function AudioPlayer({ genre, playing, setPlaying, onPlaybackStart, onPlaybackPause, stopSignal }) {
-  const audio = useRef(null); const spinRef = useRef(null); const spinState = useRef({ angle: 0, speed: 0 }); const [duration,setDuration]=useState(0); const [time,setTime]=useState(0)
+  const audio = useRef(null); const spinRef = useRef(null); const spinState = useRef({ angle: 0, speed: 0 }); const mountedRef = useRef(true); const playRequestRef = useRef(0); const [duration,setDuration]=useState(0); const [time,setTime]=useState(0)
+  useEffect(()=>{
+    mountedRef.current=true
+    return()=>{
+      mountedRef.current=false
+      playRequestRef.current+=1
+      const player=audio.current
+      if(player){player.pause();player.removeAttribute('src');player.load()}
+    }
+  },[])
   useEffect(()=>{if(stopSignal)audio.current?.pause()},[stopSignal])
   useEffect(()=>{let frame=0,last=0;const motion=window.matchMedia('(prefers-reduced-motion: reduce)');if(motion.matches){if(spinRef.current)spinRef.current.style.transform='none';return}const tick=(now)=>{const state=spinState.current;const dt=last?Math.min(now-last,48):0;last=now;state.speed+=( (playing?36:0)-state.speed )*(1-Math.exp(-dt/650));state.angle=(state.angle+state.speed*dt/1000)%360;if(spinRef.current)spinRef.current.style.transform=`rotate(${state.angle}deg)`;if(playing||state.speed>.12)frame=requestAnimationFrame(tick)};frame=requestAnimationFrame(tick);return()=>cancelAnimationFrame(frame)},[playing])
   const fmt=(n)=>`${Math.floor((n||0)/60)}:${String(Math.floor((n||0)%60)).padStart(2,'0')}`
   const seek=(e)=>{const a=audio.current;if(a?.duration){const rect=e.currentTarget.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width))*a.duration}}
   const seekByKey=(e)=>{const a=audio.current;if(!a?.duration)return;const step=e.shiftKey?15:5;if(e.key==='ArrowRight'||e.key==='ArrowUp'){e.preventDefault();a.currentTime=Math.min(a.duration,a.currentTime+step)}else if(e.key==='ArrowLeft'||e.key==='ArrowDown'){e.preventDefault();a.currentTime=Math.max(0,a.currentTime-step)}else if(e.key==='Home'){e.preventDefault();a.currentTime=0}else if(e.key==='End'){e.preventDefault();a.currentTime=a.duration}}
   return <section className="player" aria-label={`${genre.title} audio player`}>
-    <audio ref={audio} src={`/audio/${encodeURIComponent(genre.audioFile)}`} preload="metadata" playsInline onLoadedMetadata={e=>setDuration(e.target.duration)} onTimeUpdate={e=>setTime(e.target.currentTime)} onPlay={()=>{onPlaybackStart();setPlaying(true)}} onPause={()=>{if(playing)onPlaybackPause();setPlaying(false)}} onEnded={()=>{if(playing)onPlaybackPause();setPlaying(false)}} />
+    <audio ref={audio} src={`/audio/${encodeURIComponent(genre.audioFile)}`} preload="metadata" playsInline onLoadedMetadata={e=>{if(mountedRef.current)setDuration(e.target.duration)}} onTimeUpdate={e=>{if(mountedRef.current)setTime(e.target.currentTime)}} onPlay={()=>{if(!mountedRef.current)return;onPlaybackStart();setPlaying(true)}} onPause={()=>{if(!mountedRef.current)return;if(playing)onPlaybackPause();setPlaying(false)}} onEnded={()=>{if(!mountedRef.current)return;if(playing)onPlaybackPause();setPlaying(false)}} />
     <div className="player-top"><span>NOW PLAYING</span><span className="signal"><i/> SIGNAL {playing?'LIVE':'READY'}<b ref={spinRef} className="player-vinyl" aria-hidden="true"/></span></div>
-    <div className="track-row"><button className="play-button" onClick={()=>{const player=audio.current;if(!player)return;if(player.paused)player.play().catch(()=>setPlaying(false));else player.pause()}} aria-label={playing?'Pause':'Play'}><span>{playing?'Ⅱ':'▶'}</span></button><div className="track-info"><strong>{genre.track}</strong><small>BLUE NIGHT · KAOHSIUNG</small></div><div className="track-time">{fmt(time)}<span> / {duration?fmt(duration):'—:—'}</span></div></div>
+    <div className="track-row"><button className="play-button" onClick={()=>{const player=audio.current;if(!player)return;if(player.paused){const request=++playRequestRef.current;player.play()?.catch(()=>{if(mountedRef.current&&request===playRequestRef.current)setPlaying(false)})}else player.pause()}} aria-label={playing?'Pause':'Play'}><span>{playing?'Ⅱ':'▶'}</span></button><div className="track-info"><strong>{genre.track}</strong><small>BLUE NIGHT · KAOHSIUNG</small></div><div className="track-time">{fmt(time)}<span> / {duration?fmt(duration):'—:—'}</span></div></div>
     <div className="seek" onPointerDown={seek} onKeyDown={seekByKey} role="slider" aria-label="Audio progress" aria-valuemin="0" aria-valuemax={duration||0} aria-valuenow={time} aria-valuetext={`${fmt(time)} of ${fmt(duration)}`} tabIndex="0"><i style={{width:`${duration?time/duration*100:0}%`}}/></div>
     <div className="wave-meta"><span>PLAY / PAUSE</span><Waveform playing={playing}/><span>{duration?fmt(duration):'AUDIO'}</span></div>
   </section>
@@ -58,7 +67,37 @@ function Home() {
   return <main className="home-page home-enter"><Masthead/><div className="home-grid"><div className="home-copy"><p className="eyebrow"><i/> NFC SIGNAL RECEIVED · BEGIN HERE</p><h1>BLUE<br/><em>NIGHT</em></h1><div className="home-rule"/><p className="home-description">UNDERGROUND<br/>SOUND</p><p className="home-invite">Four signals. Four ways into the night.<br/>Choose a sound or tap an exhibition point.</p><GenreNavigation/></div><div className="home-record"><span className="record-note note-a">SIDE A<br/>LIVE FREQUENCIES</span><Vinyl/><span className="record-note note-b">33⅓ RPM<br/>KAOHSIUNG · 2026</span><div className="record-scribble">LISTEN<br/>CLOSER</div></div></div><footer className="site-footer"><span>BLUE NIGHT UNDERGROUND SPACE</span><span aria-label="Location: Kaohsiung Municipal Kaohsiung Vocational High School of Commerce (KSVCS / 雄商), No. 3, Wufu 2nd Road, Sinsing District, Kaohsiung City, Taiwan; latitude 22.6254, longitude 120.3091">22.6254°N 120.3091°E</span><span>NO. 01 — 04</span></footer></main>
 }
 
-function SignalTransition({ genre, kind, onDone }) { return <div className={`nfc-entry ${kind==='switch'?'signal-switch':''}`} onAnimationEnd={e=>{if(e.target===e.currentTarget&&e.animationName==='nfc-signal')onDone()}} aria-live="polite"><span className="nfc-detected">SIGNAL DETECTED</span><i className="nfc-down">↓</i><strong>{genre.number} / {genre.title}</strong><i className="nfc-scan"/><small>{genre.instrument}</small><i className="nfc-down nfc-down-last">↓</i></div> }
+function SignalTransition({ genre, kind, token, onDone }) {
+  const overlayRef=useRef(null)
+  const onDoneRef=useRef(onDone)
+  onDoneRef.current=onDone
+
+  useEffect(()=>{
+    const overlay=overlayRef.current
+    if(!overlay)return undefined
+    const handleCancel=event=>{
+      if(event.target===overlay&&event.animationName==='nfc-signal')onDoneRef.current(token)
+    }
+    overlay.addEventListener('animationcancel',handleCancel)
+    const computed=getComputedStyle(overlay)
+    const durations=computed.animationDuration.split(',').map(value=>parseFloat(value)* (value.trim().endsWith('ms')?1:1000))
+    const delays=computed.animationDelay.split(',').map(value=>parseFloat(value)* (value.trim().endsWith('ms')?1:1000))
+    const duration=Math.max(0,...durations.map((value,index)=>value+(delays[index]||0)))
+    // Animation events normally finish the transition. This CSS-derived watchdog
+    // only covers browsers that drop animationend while throttled or backgrounded.
+    const watchdog=window.setTimeout(()=>onDoneRef.current(token),duration+250)
+    return()=>{
+      window.clearTimeout(watchdog)
+      overlay.removeEventListener('animationcancel',handleCancel)
+    }
+  },[token])
+
+  const complete=event=>{
+    if(event.target===event.currentTarget&&event.animationName==='nfc-signal')onDoneRef.current(token)
+  }
+
+  return <div ref={overlayRef} className={`nfc-entry ${kind==='switch'?'signal-switch':''}`} onAnimationEnd={complete} aria-live="polite"><span className="nfc-detected">SIGNAL DETECTED</span><i className="nfc-down">↓</i><strong>{genre.number} / {genre.title}</strong><i className="nfc-scan"/><small>{genre.instrument}</small><i className="nfc-down nfc-down-last">↓</i></div>
+}
 
 function GenrePage({ genre, onNavigate, stopSignal }) {
   const [playing,setPlaying]=useState(false)
@@ -81,11 +120,21 @@ function App(){
   const activeId=useRef(initial.id)
   const transitionRef=useRef(initialTransition)
   const tokenRef=useRef(initialTransition?.token||1)
-  const beginTransition=(id,kind='switch',push=true,retarget=false)=>{
+  const beginTransition=(id,kind='switch',push=true)=>{
     if(!genres[id])return
-    if(transitionRef.current&&!retarget)return
-    if(id===activeId.current){if(transitionRef.current){transitionRef.current=null;setTransition(null)}return}
-    if(push)window.history.pushState({blueNightGenre:id},'',`/sound/${id}`)
+    const pending=transitionRef.current
+    if(pending&&pending.genreId===id)return
+    if(id===activeId.current){if(pending){window.history.replaceState({blueNightGenre:id},'',`/sound/${id}`);transitionRef.current=null;setTransition(null)}return}
+    if(push){
+      const method=pending?'replaceState':'pushState'
+      window.history[method]({blueNightGenre:id},'',`/sound/${id}`)
+    }
+    if(pending){
+      // Retarget the in-flight signal without restarting its animation.
+      transitionRef.current={...pending,genreId:id}
+      setTransition(current=>current?{...current,genreId:id}:current)
+      return
+    }
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){activeId.current=id;setGenreId(id);transitionRef.current=null;setTransition(null);return}
     const next={genreId:id,kind,token:++tokenRef.current};transitionRef.current=next;setTransition(next)
   }
@@ -94,8 +143,8 @@ function App(){
     if(!pending||pending.token!==token)return
     activeId.current=pending.genreId;setGenreId(pending.genreId);transitionRef.current=null;setTransition(null)
   }
-  useEffect(()=>{const onPopState=()=>{const destination=routeGenre();if(!destination){activeId.current=null;transitionRef.current=null;setGenreId(null);setTransition(null);return}if(destination===activeId.current){transitionRef.current=null;setTransition(null);return}beginTransition(destination,'switch',false,true)};window.addEventListener('popstate',onPopState);return()=>window.removeEventListener('popstate',onPopState)},[])
-  return <>{genreId?<GenrePage key={genreId} genre={genres[genreId]} onNavigate={id=>beginTransition(id)} stopSignal={transition?.token||0}/>:<Home/>}{transition&&<SignalTransition key={transition.token} genre={genres[transition.genreId]} kind={transition.kind} onDone={()=>finishTransition(transition.token)}/>}</>
+  useEffect(()=>{const onPopState=()=>{const destination=routeGenre();if(!destination){activeId.current=null;transitionRef.current=null;setGenreId(null);setTransition(null);return}if(destination===activeId.current){if(transitionRef.current){transitionRef.current=null;setTransition(null)}return}beginTransition(destination,'switch',false)};window.addEventListener('popstate',onPopState);return()=>window.removeEventListener('popstate',onPopState)},[])
+  return <>{genreId?<GenrePage key={genreId} genre={genres[genreId]} onNavigate={id=>beginTransition(id)} stopSignal={transition?.token||0}/>:<Home/>}{transition&&<SignalTransition key={transition.token} token={transition.token} genre={genres[transition.genreId]} kind={transition.kind} onDone={finishTransition}/>}</>
 }
 
 createRoot(document.getElementById('root')).render(<App />)
